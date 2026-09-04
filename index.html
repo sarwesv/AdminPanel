@@ -14,7 +14,7 @@
 </head>
 <body>
 
-  <!-- Access Lock Screen (Shown if not logged in as mogalt@gmail.com) -->
+  <!-- Access Lock Screen (Shown if not logged in as authorized admin) -->
   <div id="lock-screen" class="lock-screen">
     <div class="lock-card">
       <div class="lock-icon">
@@ -22,7 +22,7 @@
       </div>
       <h2 style="font-family: var(--font-heading); font-size: 1.65rem; margin-bottom: 0.5rem;">sarwesv Admin Control</h2>
       <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem;">
-        Sign in with your admin Google Account (<strong style="color: var(--accent-cyan);">mogalt@gmail.com</strong>) to access subscriber records and live dashboard controls.
+        Sign in with your authorized Google Account to access subscriber records and live dashboard controls.
       </p>
 
       <button id="admin-login-btn" onclick="handleAdminLogin()" class="btn btn-primary" style="width: 100%; font-size: 1.05rem; padding: 0.85rem 1.5rem;">
@@ -31,12 +31,12 @@
       </button>
 
       <div id="access-denied-msg" style="color: var(--accent-red); margin-top: 1rem; font-weight: 600; font-size: 0.875rem; display: none;">
-        ⛔ Access Denied: Only mogalt@gmail.com is authorized to view this dashboard.
+        ⛔ Access Denied: You are not authorized to view this dashboard.
       </div>
     </div>
   </div>
 
-  <!-- Admin Dashboard Workspace (Visible only when authenticated as mogalt@gmail.com) -->
+  <!-- Admin Dashboard Workspace -->
   <div id="admin-workspace" class="container" style="display: none;">
     <!-- Header -->
     <header class="admin-header">
@@ -49,8 +49,8 @@
       </div>
 
       <div class="user-pill">
-        <span style="font-size: 0.8rem; color: var(--text-muted);">Logged in as:</span>
-        <span id="admin-user-display" class="user-email">mogalt@gmail.com</span>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Status:</span>
+        <span id="admin-user-display" class="user-email">Admin Verified</span>
         <button onclick="handleAdminLogout()" class="btn btn-secondary btn-sm" style="margin-left: 0.5rem;">Sign Out</button>
       </div>
     </header>

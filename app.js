@@ -22,7 +22,7 @@ function initAuthListener() {
     if (user && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
       lockScreen.style.display = 'none';
       adminWorkspace.style.display = 'block';
-      if (userDisplay) userDisplay.textContent = user.email;
+      if (userDisplay) userDisplay.textContent = "Admin Verified";
       loadSubscribers();
     } else {
       adminWorkspace.style.display = 'none';
@@ -31,7 +31,7 @@ function initAuthListener() {
       if (user) {
         // Logged in with wrong email
         if (deniedMsg) deniedMsg.style.display = 'block';
-        showToast(`Access Denied: ${user.email} is not authorized.`, 'warning');
+        showToast(`Access Denied: You are not authorized to view this dashboard.`, 'warning');
       } else {
         if (deniedMsg) deniedMsg.style.display = 'none';
       }
