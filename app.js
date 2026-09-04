@@ -2,7 +2,10 @@
    SARWESV ADMIN DASHBOARD - LOGIC & FIREBASE CONTROLLER
    ========================================================================== */
 
-const ADMIN_EMAIL = "mogalt@gmail.com";
+const ADMIN_EMAILS = [
+  "mogalt@gmail.com",
+  "sarvick.vemula@gmail.com"
+];
 let allSubscribers = [];
 let filteredSubscribers = [];
 
@@ -19,7 +22,7 @@ function initAuthListener() {
     const deniedMsg = document.getElementById('access-denied-msg');
     const userDisplay = document.getElementById('admin-user-display');
 
-    if (user && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+    if (user && ADMIN_EMAILS.includes(user.email.toLowerCase())) {
       lockScreen.style.display = 'none';
       adminWorkspace.style.display = 'block';
       if (userDisplay) userDisplay.textContent = "Admin Verified";
