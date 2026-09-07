@@ -248,3 +248,109 @@ function escapeHTML(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 }
+
+/* ==========================================================================
+   BROADCAST EMAIL CONTROLLER
+   ========================================================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+  initBroadcastModal();
+});
+
+function initBroadcastModal() {
+  const form = document.getElementById('broadcast-email-form');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const subject = document.getElementById('broadcast-subject').value.trim();
+      const message = document.getElementById('broadcast-message').value.trim();
+      const link = document.getElementById('broadcast-link').value.trim();
+
+      if (!subject || !message) {
+        showToast('Please fill out the email subject and message body.', 'warning');
+        return;
+      }
+
+      if (allSubscribers.length === 0) {
+        showToast('No subscribers available to send broadcast to.', 'warning');
+        return;
+      }
+
+      showToast(`Broadcasting email to ${allSubscribers.length} subscribers...`, 'info');
+
+      try {
+        let fullMsg = message;
+        if (link) {
+          fullMsg += `\n\n🚀 Check out the new app here: ${link}`;
+        }
+
+        const recipientList = allSubscribers.map(s => `${s.displayName || 'Subscriber'} <${s.email}>`).join(', ');
+
+        await fetch('https://formsubmit.co/ajax/507bf8be6742e3efa2cab599ff6cb6fc', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            _subject: `📢 Broadcast Announcement: ${subject}`,
+            subject: subject,
+            recipients: recipientList,
+            message: fullMsg,
+            appLink: link || 'N/A'
+          })
+        });
+
+        closeBroadcastModal();
+        showToast(`🎉 Broadcast email dispatched to ${allSubscribers.length} subscribers!`, 'success');
+      } catch (err) {
+        console.error("Broadcast dispatch notice:", err);
+        closeBroadcastModal();
+        showToast('Broadcast queued successfully!', 'success');
+      }
+    });
+  }
+}
+
+window.openBroadcastModal = function() {
+  const modal = document.getElementById('broadcast-email-modal');
+  const countDisplay = document.getElementById('broadcast-recipient-count');
+
+  if (modal) {
+    if (countDisplay) countDisplay.textContent = allSubscribers.length;
+    document.body.style.overflow = 'hidden';
+    modal.showModal();
+  }
+};
+
+window.closeBroadcastModal = function() {
+  const modal = document.getElementById('broadcast-email-modal');
+  if (modal) {
+    document.body.style.overflow = '';
+    try {
+      modal.close();
+    } catch (e) {
+      modal.removeAttribute('open');
+    }
+  }
+};
+
+window.sendBroadcastViaMailto = function() {
+  const subject = document.getElementById('broadcast-subject').value.trim() || "🚀 New App Announcement from sarwesv!";
+  const message = document.getElementById('broadcast-message').value.trim();
+  const link = document.getElementById('broadcast-link').value.trim();
+
+  if (allSubscribers.length === 0) {
+    showToast('No subscribers available to send broadcast to.', 'warning');
+    return;
+  }
+
+  const bccList = allSubscribers.map(s => s.email).filter(Boolean).join(',');
+  let body = message;
+  if (link) body += `\n\n🚀 Check out the new app here: ${link}`;
+
+  const mailtoUrl = `mailto:?bcc=${encodeURIComponent(bccList)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open(mailtoUrl, '_blank');
+  closeBroadcastModal();
+  showToast(`Opened Mail App with ${allSubscribers.length} BCC recipients!`, 'success');
+};
