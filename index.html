@@ -88,12 +88,7 @@
       <div class="action-buttons">
         <button onclick="openBroadcastMailApp()" class="btn btn-primary" style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue)); box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-          Broadcast Email (Mail App)
-        </button>
-
-        <button onclick="openBroadcastModal()" class="btn btn-secondary" title="Customize Email Subject & Message">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-          Compose Message
+          Broadcast Email
         </button>
 
         <button onclick="copyAllEmailAddresses()" class="btn btn-secondary">
@@ -131,50 +126,6 @@
       </table>
     </div>
   </div>
-
-  <!-- Broadcast Announcement Email Modal -->
-  <dialog id="broadcast-email-modal" class="dialog-modal">
-    <div class="modal-header">
-      <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="2"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-        <span style="font-weight: 700; color: var(--text-main); font-size: 1rem;">Broadcast App Announcement</span>
-      </div>
-      <button class="modal-close-btn" onclick="closeBroadcastModal()" aria-label="Close modal">&times;</button>
-    </div>
-    <div class="modal-body" style="padding: 1.5rem 2rem 2rem;">
-      <h3 style="font-family: var(--font-heading); font-size: 1.35rem; margin-bottom: 0.5rem; text-align: center;">Send App Launch Update</h3>
-      <p style="color: var(--text-muted); font-size: 0.875rem; text-align: center; margin-bottom: 1.5rem;">
-        Broadcast an announcement to all <strong id="broadcast-recipient-count" style="color: var(--accent-cyan);">0</strong> newsletter subscribers.
-      </p>
-
-      <form id="broadcast-email-form">
-        <div class="form-group" style="margin-bottom: 1rem;">
-          <label for="broadcast-subject" class="form-label" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Email Subject Line</label>
-          <input type="text" id="broadcast-subject" class="form-control" placeholder="🚀 New App Launch: [App Name] is live!" required />
-        </div>
-
-        <div class="form-group" style="margin-bottom: 1rem;">
-          <label for="broadcast-link" class="form-label" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">New App Link (Optional)</label>
-          <input type="url" id="broadcast-link" class="form-control" placeholder="https://sarwesv.github.io/invoice/" />
-        </div>
-
-        <div class="form-group" style="margin-bottom: 1.5rem;">
-          <label for="broadcast-message" class="form-label" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Message Body</label>
-          <textarea id="broadcast-message" class="form-control" rows="5" placeholder="Hey everyone! I just launched a brand new app..." style="resize: vertical; font-family: inherit;" required></textarea>
-        </div>
-
-        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; flex-wrap: wrap;">
-          <button type="button" onclick="closeBroadcastModal()" class="btn btn-secondary btn-sm">Cancel</button>
-          <button type="button" onclick="sendBroadcastViaMailto()" class="btn btn-secondary btn-sm" style="border-color: var(--accent-purple); color: var(--accent-purple);">
-            Open Mail App (BCC)
-          </button>
-          <button type="submit" class="btn btn-primary btn-sm" style="background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));">
-            Send Instant Broadcast
-          </button>
-        </div>
-      </form>
-    </div>
-  </dialog>
 
   <!-- Toast Notification Bar -->
   <div id="toast-bar" class="toast">
