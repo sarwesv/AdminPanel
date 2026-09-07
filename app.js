@@ -335,6 +335,22 @@ window.closeBroadcastModal = function() {
   }
 };
 
+window.openBroadcastMailApp = function() {
+  if (allSubscribers.length === 0) {
+    showToast('No subscribers available yet to send broadcast to.', 'warning');
+    return;
+  }
+
+  const bccList = allSubscribers.map(s => s.email).filter(Boolean).join(',');
+  const subject = "🚀 New App Announcement from sarwesv!";
+  const body = "Hey everyone!\n\nI just launched a brand new web app / retro game!\nCheck it out here: https://sarwesv.github.io/\n\nThanks for subscribing,\nsarwesv";
+
+  const mailtoUrl = `mailto:?bcc=${encodeURIComponent(bccList)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  
+  window.location.href = mailtoUrl;
+  showToast(`🎉 Opened Mail App with ${allSubscribers.length} BCC subscribers!`, 'success');
+};
+
 window.sendBroadcastViaMailto = function() {
   const subject = document.getElementById('broadcast-subject').value.trim() || "🚀 New App Announcement from sarwesv!";
   const message = document.getElementById('broadcast-message').value.trim();
@@ -350,7 +366,7 @@ window.sendBroadcastViaMailto = function() {
   if (link) body += `\n\n🚀 Check out the new app here: ${link}`;
 
   const mailtoUrl = `mailto:?bcc=${encodeURIComponent(bccList)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.open(mailtoUrl, '_blank');
+  window.location.href = mailtoUrl;
   closeBroadcastModal();
   showToast(`Opened Mail App with ${allSubscribers.length} BCC recipients!`, 'success');
 };
